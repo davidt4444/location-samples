@@ -31,4 +31,5 @@
     <string name="location_lat_lng">Lat: %1$f\nLng: %2$f</string>
     <string name="notification_channel_name">Location updates</string>
     <string name="notification_title">Location updates</string>
+    <string name="log">%1$s\\n</string>
 </resources>
