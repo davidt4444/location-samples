@@ -15,6 +15,7 @@ class UserMetadata@Inject constructor(
 )
 {
     val instance = this
+    var userToken = "1234"
     var username = "test"
     var password = "test"
     var twitter_handle = "test_handle"
