@@ -15,18 +15,11 @@ class UserMetadata@Inject constructor(
 )
 {
     val instance = this
-    var runname = "test_run"
     var username = "test"
     var password = "test"
     var twitter_handle = "test_handle"
     var email = "test@aggregatedatasystems.com"
     var locations = emptyList<LocationMetadata>()
-    fun addLocation(loc :Location?)
-    {
-        if (loc != null) {
-            locations += LocationMetadata(loc)
-        }
-    }
     fun addLocation(loc :LocationMetadata?)
     {
         if (loc != null) {
@@ -38,7 +31,7 @@ class UserMetadata@Inject constructor(
         var stuff = "runname, timestamp, latitude, longitude, username, twitter_handle, email\n"
         for(loc in locations.reversed())
         {
-            stuff += runname.replace(",", "")+","+loc.dateTime+","+loc.location?.latitude+","+loc.location?.longitude+","+username.replace(",", "")+","+twitter_handle.replace(",", "")+","+email.replace(",", "")+"\n"
+            stuff += loc.runname.replace(",", "")+","+loc.dateTime+","+loc.location?.latitude+","+loc.location?.longitude+","+username.replace(",", "")+","+twitter_handle.replace(",", "")+","+email.replace(",", "")+"\n"
         }
         stuff += password+"\n"
 
@@ -51,7 +44,7 @@ class UserMetadata@Inject constructor(
             for (i in 1 until lines.size) {
                 val cols = lines[i].split(",").toTypedArray()
                 if (cols.size == 7) {
-                    runname = cols[0]
+                    val runname = cols[0]
                     //DateFormat df = DateFormat.getDateInstance();
                     val df: DateFormat = SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy")
                     val temp_date: Date = df.parse(cols[1])
@@ -60,7 +53,7 @@ class UserMetadata@Inject constructor(
                     val temp_loc = Location("")
                     temp_loc.latitude = temp_lat
                     temp_loc.longitude = temp_long
-                    val temp_loc_meta = LocationMetadata(temp_loc, temp_date)
+                    val temp_loc_meta = LocationMetadata(temp_loc, runname, temp_date)
                     addLocation(temp_loc_meta)
                     username = cols[4]
                     twitter_handle = cols[5]
@@ -80,7 +73,6 @@ class UserMetadata@Inject constructor(
             ${e.stackTrace}
             
             """.trimIndent()
-            runname = "test_run"
             username = "test"
             password = "test"
             twitter_handle = "test_handle"

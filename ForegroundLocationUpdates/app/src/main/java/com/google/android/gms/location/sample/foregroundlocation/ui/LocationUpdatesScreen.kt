@@ -56,6 +56,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.location.sample.foregroundlocation.*
 
 var cache = UserMetadata()
+var runname = ""
 @Composable
 fun LocationUpdatesScreen(
     showDegradedExperience: Boolean,
@@ -64,7 +65,10 @@ fun LocationUpdatesScreen(
     isLocationOn: Boolean,
     location: Location?
 ) {
-    cache.addLocation(location)
+    if(location!=null)
+    {
+        cache.addLocation(LocationMetadata(location, runname))
+    }
     var showRationaleDialog by remember { mutableStateOf(false) }
     if (showRationaleDialog) {
         PermissionRationaleDialog(
@@ -126,7 +130,7 @@ fun LocationUpdatesScreen(
     val labelResId = if (isLocationOn) R.string.stop else R.string.start
 
     // Creating a variable to store toggle state
-    var passwordVisible by remember { mutableStateOf(false) }
+    //var passwordVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -148,24 +152,31 @@ fun LocationUpdatesScreen(
             onValueChange = {
                 cache.password = it
             },
-            label = { Text("Password") },
-            singleLine = true,
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            trailingIcon = {
-                val image = if (passwordVisible)
-                    Icons.Filled.ArrowForward
-                else Icons.Filled.ArrowBack
-
-                // Localized description for accessibility services
-                val description = if (passwordVisible) "Hide password" else "Show password"
-
-                // Toggle button to hide or display password
-                IconButton(onClick = {passwordVisible = !passwordVisible}){
-                    Icon(imageVector  = image, description)
-                }
-            }
+            label = { Text("Password") }
         )
+//        TextField(
+//            value = cache.password,
+//            onValueChange = {
+//                cache.password = it
+//            },
+//            label = { Text("Password") },
+//            singleLine = true,
+//            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//            trailingIcon = {
+//                val image = if (passwordVisible)
+//                    Icons.Filled.ArrowForward
+//                else Icons.Filled.ArrowBack
+//
+//                // Localized description for accessibility services
+//                val description = if (passwordVisible) "Hide password" else "Show password"
+//
+//                // Toggle button to hide or display password
+//                IconButton(onClick = {passwordVisible = !passwordVisible}){
+//                    Icon(imageVector  = image, description)
+//                }
+//            }
+//        )
         TextField(
             value = cache.twitter_handle,
             onValueChange = {
@@ -181,11 +192,11 @@ fun LocationUpdatesScreen(
             label = { Text("Email") }
         )
         TextField(
-            value = cache.runname,
+            value = runname,
             onValueChange = {
-                cache.runname = it
+                runname = it
             },
-            label = { Text("Email") }
+            label = { Text("Run Name") }
         )
         Text(
             text = message,

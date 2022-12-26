@@ -9,9 +9,11 @@ import javax.inject.Inject
 
 class LocationMetadata @Inject constructor(
     private val _loc: Location?,
+    private val _runname: String= "",
     private val _datetime: Date = Calendar.getInstance().getTime()
 ) {
     var location = _loc
+    var runname = _runname
     var dateTime = _datetime
 
 }
