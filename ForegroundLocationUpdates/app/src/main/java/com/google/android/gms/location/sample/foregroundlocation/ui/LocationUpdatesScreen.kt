@@ -218,7 +218,7 @@ fun LocationUpdatesScreen(
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Rune Name: "+runname,
+            text = "Run Name: "+runname,
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
         )
