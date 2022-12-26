@@ -55,14 +55,13 @@ import androidx.compose.material.*
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.location.sample.foregroundlocation.*
 
-var cache = UserMetadata()
-var runname = "test"
 @Composable
 fun LocationUpdatesScreen(
     showDegradedExperience: Boolean,
     needsPermissionRationale: Boolean,
     onButtonClick: () -> Unit,
     isLocationOn: Boolean,
+    cache: UserMetadata,
     location: Location?
 ) {
     //adding the location change logging here enforces the fact that
@@ -71,7 +70,7 @@ fun LocationUpdatesScreen(
     // of when the data is being logged.
     if(location!=null)
     {
-        cache.addLocation(LocationMetadata(cache.userToken, runname, location))
+        cache.addLocation(LocationMetadata(cache.userToken, location))
     }
     var showRationaleDialog by remember { mutableStateOf(false) }
     if (showRationaleDialog) {
@@ -218,11 +217,6 @@ fun LocationUpdatesScreen(
             textAlign = TextAlign.Center
         )
         Text(
-            text = "Run Name: "+runname,
-            style = MaterialTheme.typography.h6,
-            textAlign = TextAlign.Center
-        )
-        Text(
             text = message,
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
@@ -274,6 +268,7 @@ fun LocationUpdatesScreenPreview() {
             needsPermissionRationale = false,
             onButtonClick = {},
             isLocationOn = true,
+            cache = UserMetadata("Loading...."),
             location = null,
         )
     }
