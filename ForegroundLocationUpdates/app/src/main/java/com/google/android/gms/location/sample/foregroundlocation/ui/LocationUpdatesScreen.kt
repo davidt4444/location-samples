@@ -71,7 +71,7 @@ fun LocationUpdatesScreen(
     // of when the data is being logged.
     if(location!=null)
     {
-        cache.addLocation(LocationMetadata(location, runname))
+        cache.addLocation(LocationMetadata(cache.userToken, runname, location))
     }
     var showRationaleDialog by remember { mutableStateOf(false) }
     if (showRationaleDialog) {

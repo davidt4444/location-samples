@@ -29,12 +29,16 @@ class UserMetadata@Inject constructor(
     }
     fun printUserMetadata():String
     {
-        var stuff = "runname, timestamp, latitude, longitude, username, twitter_handle, email\n"
+        var stuff = "userToken,runname,timestamp,latitude,longitude\n"
         for(loc in locations.reversed())
         {
-            stuff += loc.runname.replace(",", "")+","+loc.dateTime+","+loc.location?.latitude+","+loc.location?.longitude+","+username.replace(",", "")+","+twitter_handle.replace(",", "")+","+email.replace(",", "")+"\n"
+            stuff += loc.userToken.replace(",", "")+loc.runname.replace(",", "")+","+loc.dateTime+","+loc.location.latitude+","+loc.location.longitude+"\n"
         }
+        stuff += userToken+"\n"
+        stuff += username+"\n"
         stuff += password+"\n"
+        stuff += twitter_handle+"\n"
+        stuff += email+"\n"
 
         return stuff
     }
@@ -44,25 +48,31 @@ class UserMetadata@Inject constructor(
         try {
             for (i in 1 until lines.size) {
                 val cols = lines[i].split(",").toTypedArray()
-                if (cols.size == 7) {
-                    val runname = cols[0]
+                if (cols.size == 5) {
+                    var loc = LocationMetadata()
+                    loc.userToken = cols[0]
+                    loc.runname = cols[1]
                     //DateFormat df = DateFormat.getDateInstance();
                     val df: DateFormat = SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy")
-                    val temp_date: Date = df.parse(cols[1])
-                    val temp_lat = java.lang.Double.valueOf(cols[2])
-                    val temp_long = java.lang.Double.valueOf(cols[3])
-                    val temp_loc = Location("")
-                    temp_loc.latitude = temp_lat
-                    temp_loc.longitude = temp_long
-                    val temp_loc_meta = LocationMetadata(temp_loc, runname, temp_date)
-                    addLocation(temp_loc_meta)
-                    username = cols[4]
-                    twitter_handle = cols[5]
-                    email = cols[6]
-                } else if (cols.size == 1) {
+                    val temp_date: Date? = df.parse(cols[2])
+                    loc.dateTime = temp_date
+                    val temp_lat = java.lang.Double.valueOf(cols[3])
+                    val temp_long = java.lang.Double.valueOf(cols[4])
+                    loc.location.latitude = temp_lat
+                    loc.location.longitude = temp_long
+                    addLocation(loc)
+                } else if (i == lines.size-5) {
+                    userToken = cols[0]
+                } else if (i == lines.size-4) {
+                    username = cols[0]
+                } else if (i == lines.size-3) {
                     password = cols[0]
+                } else if (i == lines.size-2) {
+                    twitter_handle = cols[0]
+                } else if (i == lines.size-1) {
+                    email = cols[0]
                 } else {
-                    throw Exception("The number of columns does not match up with the expected 7 for runname, temp_date, latitude, longitude, username, twitter_handle and email.")
+                    throw Exception("The number of columns does not match up with the expected 5 for userToken, runname, timestamp, latitude, longitude and 1 for userToken, username, password, twitter_handle, email!")
                 }
             }
         } catch (e: Exception) {
@@ -74,6 +84,7 @@ class UserMetadata@Inject constructor(
             ${e.stackTrace}
             
             """.trimIndent()
+            userToken = "1234"
             username = "test"
             password = "test"
             twitter_handle = "test_handle"

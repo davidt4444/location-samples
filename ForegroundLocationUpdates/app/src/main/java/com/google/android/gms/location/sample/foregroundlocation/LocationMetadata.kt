@@ -7,15 +7,23 @@ import java.util.Calendar;
 import javax.inject.Inject
 
 
-class LocationMetadata @Inject constructor(
-    private val _loc: Location?,
-    private val _runname: String= "",
-    private val _datetime: Date = Calendar.getInstance().getTime()
-) {
-    var location = _loc
-    var runname = _runname
-    var dateTime = _datetime
+class LocationMetadata{
+    var location: Location = Location("")
+    var runname = "test"
+    var userToken = "1234"
+    var dateTime : Date? = Calendar.getInstance().getTime()
+    constructor(
+        _userToken: String = "1234",
+        _runname: String= "test",
+        _loc: Location = Location(""),
+        _datetime: Date? = Calendar.getInstance().getTime()
+    ) {
+        location = _loc
+        runname = _runname
+        userToken = _userToken
+        dateTime = _datetime
 
+    }
 }
 
 
