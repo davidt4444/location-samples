@@ -37,21 +37,6 @@ import com.google.android.gms.location.sample.foregroundlocation.ui.theme.Foregr
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.Icon
-//import android.os.Bundle
-//import androidx.activity.ComponentActivity
-//import androidx.activity.compose.setContent
-//import androidx.compose.foundation.layout.*
-//import androidx.compose.foundation.text.KeyboardOptions
-//import androidx.compose.material.*
-//import androidx.compose.material.icons.filled.ArrowBack
-//import androidx.compose.material.icons.filled.ArrowForward
-//import androidx.compose.runtime.*
-//import androidx.compose.ui.graphics.Color
-//import androidx.compose.ui.text.input.KeyboardType
-//import androidx.compose.ui.text.input.PasswordVisualTransformation
-//import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.location.sample.foregroundlocation.*
 
@@ -64,10 +49,6 @@ fun LocationUpdatesScreen(
     cache: UserMetadata,
     location: Location?
 ) {
-    //adding the location change logging here enforces the fact that
-    // the location data is only being taken when the user has the app
-    // screen visible to the user. This way the user is in more control
-    // of when the data is being logged.
     if(location!=null)
     {
         cache.addLocation(LocationMetadata(cache.userToken, location))
@@ -109,12 +90,6 @@ fun LocationUpdatesScreen(
     else {
         stuff = cache.printUserMetadata()
         cache.writeToFile(stuff, LocalContext.current)
-
-//        I may come back to this later on
-//        This is a stub for one of the test email services
-//        val emailService = EmailService("yourSmtpServer", 587)
-//        emailService.usage(stuff)
-
     }
     val log = when {
         isLocationOn -> if (location != null) {
@@ -132,9 +107,6 @@ fun LocationUpdatesScreen(
     }
     val labelResId = if (isLocationOn) R.string.stop else R.string.start
 
-    // Creating a variable to store toggle state
-    //var passwordVisible by remember { mutableStateOf(false) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -143,74 +115,6 @@ fun LocationUpdatesScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-//These are the user specific values that are important
-// to the user meta data
-// It will be filled in elsewhere. It is only here for documenting purposes
-// you want the data to be in place where the changes to the values in the input
-// happen one input at a time as opposed to the location values changing every 3 seconds
-// that way it captures all of the inputs
-//        TextField(
-//            value = cache.username,
-//            onValueChange = {
-//                cache.username = it
-//            },
-//            label = { Text("Username") }
-//        )
-//        TextField(
-//            value = cache.password,
-//            onValueChange = {
-//                cache.password = it
-//            },
-//            label = { Text("Password") }
-//        )
-//        TextField(
-//            value = cache.password,
-//            onValueChange = {
-//                cache.password = it
-//            },
-//            label = { Text("Password") },
-//            singleLine = true,
-//            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            trailingIcon = {
-//                val image = if (passwordVisible)
-//                    Icons.Filled.ArrowForward
-//                else Icons.Filled.ArrowBack
-//
-//                // Localized description for accessibility services
-//                val description = if (passwordVisible) "Hide password" else "Show password"
-//
-//                // Toggle button to hide or display password
-//                IconButton(onClick = {passwordVisible = !passwordVisible}){
-//                    Icon(imageVector  = image, description)
-//                }
-//            }
-//        )
-//        TextField(
-//            value = cache.twitter_handle,
-//            onValueChange = {
-//                cache.twitter_handle = it
-//            },
-//            label = { Text("Twitter Handle") }
-//        )
-//        TextField(
-//            value = cache.email,
-//            onValueChange = {
-//                cache.email = it
-//            },
-//            label = { Text("Email") }
-//        )
-//        TextField(
-//            value = runname,
-//            onValueChange = {
-//                runname = it
-//            },
-//            label = { Text("Run Name") }
-//        )
-//end user values that are important to just the user
-
-//These are the location specific values that are important
-// to the location meta data
         Text(
             text = "UserToken: "+cache.userToken,
             style = MaterialTheme.typography.h6,
@@ -221,7 +125,6 @@ fun LocationUpdatesScreen(
             style = MaterialTheme.typography.h6,
             textAlign = TextAlign.Center
         )
-//end location values that are important to just the user
         Button(onClick = { onClick() }) {
             Text(text = stringResource(id = labelResId))
         }

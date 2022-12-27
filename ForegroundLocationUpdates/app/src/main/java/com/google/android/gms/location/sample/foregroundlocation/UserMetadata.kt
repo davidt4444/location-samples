@@ -1,10 +1,8 @@
 package com.google.android.gms.location.sample.foregroundlocation
 import android.content.Context
-import android.location.Location
 import android.util.Log
 import java.io.IOException
 import java.io.OutputStreamWriter
-import javax.inject.Inject
 import javax.inject.Singleton
 import java.util.Date;
 import java.text.DateFormat;
