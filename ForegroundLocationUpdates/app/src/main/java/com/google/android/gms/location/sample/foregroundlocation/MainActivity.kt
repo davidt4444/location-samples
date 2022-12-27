@@ -92,6 +92,7 @@ fun MainScreen(
     val uiState by viewModel.playServicesAvailableState.collectAsState()
     val isLocationOn by viewModel.isReceivingLocationUpdates.collectAsState()
     val lastLocation by viewModel.lastLocation.collectAsState()
+    //This collects the data across all of the states
     val userMetadata = UserMetadata("1234")
 
     when (uiState) {
