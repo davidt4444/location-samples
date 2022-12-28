@@ -81,7 +81,13 @@ class MyLocationManager private constructor(private val context: Context) {
     private val locationUpdatePendingIntent: PendingIntent by lazy {
         val intent = Intent(context, LocationUpdatesBroadcastReceiver::class.java)
         intent.action = LocationUpdatesBroadcastReceiver.ACTION_PROCESS_UPDATES
-        PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        //Changing to PendingIntent.FLAG_IMMUTABLE solves:
+        //location updates background kotlin: Targeting S+ (version 31 and above)
+        // requires that one of FLAG_IMMUTABLE or FLAG_MUTABLE be specified when
+        // creating a PendingIntent. Strongly consider using FLAG_IMMUTABLE,
+        // only use FLAG_MUTABLE if some functionality depends on the PendingIntent
+        // being mutable, e.g. if it needs to be used with inline replies or bubbles.
+        PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)//, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     /**
