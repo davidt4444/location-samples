@@ -40,13 +40,13 @@ import androidx.compose.material.*
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.gms.location.sample.foregroundlocation.*
 
+val cache :UserMetadata = UserMetadata("1234")
 @Composable
 fun LocationUpdatesScreen(
     showDegradedExperience: Boolean,
     needsPermissionRationale: Boolean,
     onButtonClick: () -> Unit,
     isLocationOn: Boolean,
-    cache: UserMetadata,
     location: Location?
 ) {
     if(location!=null)
@@ -171,7 +171,6 @@ fun LocationUpdatesScreenPreview() {
             needsPermissionRationale = false,
             onButtonClick = {},
             isLocationOn = true,
-            cache = UserMetadata("Loading...."),
             location = null,
         )
     }

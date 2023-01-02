@@ -30,7 +30,7 @@ class UserMetadata{
             var stuff = "userToken,timestamp,latitude,longitude\n"
             for(loc in locations.reversed())
             {
-                stuff += loc.userToken?.replace(",", "")+","+loc.dateTime+","+loc.location.latitude+","+loc.location.longitude+"\n"
+                stuff += loc.userToken.replace(",", "")+","+loc.dateTime+","+loc.location.latitude+","+loc.location.longitude+"\n"
             }
             stuff += userToken
 

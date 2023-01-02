@@ -93,7 +93,6 @@ fun MainScreen(
     val isLocationOn by viewModel.isReceivingLocationUpdates.collectAsState()
     val lastLocation by viewModel.lastLocation.collectAsState()
     //This collects the data across all of the states
-    val userMetadata = UserMetadata("1234")
 
     when (uiState) {
         Initializing -> InitializingScreen()
@@ -104,7 +103,6 @@ fun MainScreen(
                 needsPermissionRationale = locationPermissionState.shouldShowRationale(),
                 onButtonClick = locationPermissionState::requestPermissions,
                 isLocationOn = isLocationOn,
-                cache = userMetadata,
                 location = lastLocation,
             )
         }
